@@ -35,7 +35,7 @@ MATX(mat2d, 2, double, "%lf")
 MATX(mat3d, 3, double, "%lf")
 MATX(mat4d, 4, double, "%lf")
 
-MATX_MAT4_HELPERS(mat4f, MAT4F, float, sqrtf, tanf)
-MATX_MAT4_HELPERS(mat4d, MAT4D, float, sqrt, tan)
+MATX_MAT4_HELPERS(mat4f, MAT4F, float, sqrtf, sinf, cosf, tanf)
+MATX_MAT4_HELPERS(mat4d, MAT4D, float, sqrt, sin, cos, tan)
 
 #endif

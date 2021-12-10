@@ -65,6 +65,19 @@ MATX_EXPORT void NAME_LOWER ## _mul(NAME_LOWER a, NAME_LOWER b, NAME_LOWER out) 
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
+MATX_EXPORT void NAME_LOWER ## _transp(NAME_LOWER mat, NAME_LOWER out) \
+{ \
+        NAME_LOWER tmp; \
+        \
+        for (int i = 0; i < N; i++) { \
+                for (int j = 0; j < N; j++) { \
+                        tmp[i][j] = mat[j][i]; \
+                } \
+        } \
+        \
+        memcpy(out, tmp, N * N * sizeof(T)); \
+} \
+\
 MATX_EXPORT void NAME_LOWER ## _fprintf(NAME_LOWER mat, FILE *f) \
 { \
         for (int i = 0; i < N; i++) { \

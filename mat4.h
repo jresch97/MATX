@@ -24,7 +24,7 @@
 
 // TODO: Verify math checks out.
 
-#define MATX_MAT4_HELPERS(NAME_LOWER, NAME_UPPER, T, SQRT, TAN) \
+#define MATX_MAT4_HELPERS(NAME_LOWER, NAME_UPPER, T, SQRT, SIN, COS, TAN) \
 \
 const NAME_LOWER NAME_UPPER ## _IDENT = { \
         { (T)1, (T)0, (T)0, (T)0 }, \
@@ -32,6 +32,38 @@ const NAME_LOWER NAME_UPPER ## _IDENT = { \
         { (T)0, (T)0, (T)1, (T)0 }, \
         { (T)0, (T)0, (T)0, (T)1 }  \
 }; \
+\
+MATX_EXPORT void NAME_LOWER ## _transl(const T p[3], NAME_LOWER out) \
+{ \
+        out[0][0] = (T)1; out[0][1] = (T)0; out[0][2] = (T)0; out[0][3] = p[0]; \
+        out[1][0] = (T)0; out[1][1] = (T)1; out[1][2] = (T)0; out[1][3] = p[1]; \
+        out[2][0] = (T)0; out[2][1] = (T)0; out[2][2] = (T)1; out[2][3] = p[2]; \
+        out[3][0] = (T)0; out[3][1] = (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
+} \
+\
+MATX_EXPORT void NAME_LOWER ## _rotx(NAME_LOWER out, T theta) \
+{ \
+        out[0][0] = (T)1; out[0][1] =        (T)0; out[0][2] =       (T)0; out[0][3] = (T)0; \
+        out[1][0] = (T)0; out[1][1] =  COS(theta); out[1][2] = SIN(theta); out[1][3] = (T)0; \
+        out[2][0] = (T)0; out[2][1] = -SIN(theta); out[2][2] = COS(theta); out[2][3] = (T)0; \
+        out[3][0] = (T)0; out[3][1] =        (T)0; out[3][2] =       (T)0; out[3][3] = (T)1; \
+} \
+\
+MATX_EXPORT void NAME_LOWER ## _roty(NAME_LOWER out, T theta) \
+{ \
+        out[0][0] = COS(theta); out[0][1] = (T)0; out[0][2] = -SIN(theta); out[0][3] = (T)0; \
+        out[1][0] =       (T)0; out[1][1] = (T)1; out[1][2] =        (T)0; out[1][3] = (T)0; \
+        out[2][0] = SIN(theta); out[2][1] = (T)0; out[2][2] =  COS(theta); out[2][3] = (T)0; \
+        out[3][0] =       (T)0; out[3][1] = (T)0; out[3][2] =        (T)0; out[3][3] = (T)1; \
+} \
+\
+MATX_EXPORT void NAME_LOWER ## _rotz(NAME_LOWER out, T theta) \
+{ \
+        out[0][0] = COS(theta); out[0][1] = -SIN(theta); out[0][2] = (T)0; out[0][3] = (T)0; \
+        out[1][0] = SIN(theta); out[1][1] =  COS(theta); out[1][2] = (T)0; out[1][3] = (T)0; \
+        out[2][0] =       (T)0; out[2][1] =        (T)0; out[2][2] = (T)1; out[2][3] = (T)0; \
+        out[3][0] =       (T)0; out[3][1] =        (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
+} \
 \
 MATX_EXPORT void NAME_LOWER ## _look_at( \
                             const T eye[3], \
