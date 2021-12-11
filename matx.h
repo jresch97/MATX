@@ -65,6 +65,23 @@ MATX_EXPORT void NAME_LOWER ## _mul(NAME_LOWER a, NAME_LOWER b, NAME_LOWER out) 
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
+MATX_EXPORT void NAME_LOWER ## _mulv(NAME_LOWER mat, T vec[N], T out[N]) \
+{ \
+        T tmp[N]; \
+        \
+        for (int i = 0; i < N; i++) { \
+                T sum = (T)0; \
+                \
+                for (int j = 0; j < N; j++) { \
+                        sum += mat[i][j] * vec[j]; \
+                } \
+                \
+                tmp[i] = sum; \
+        } \
+        \
+        memcpy(out, tmp, N * sizeof(T)); \
+} \
+\
 MATX_EXPORT void NAME_LOWER ## _transp(NAME_LOWER mat, NAME_LOWER out) \
 { \
         NAME_LOWER tmp; \

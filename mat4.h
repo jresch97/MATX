@@ -33,7 +33,7 @@ const NAME_LOWER NAME_UPPER ## _IDENT = { \
         { (T)0, (T)0, (T)0, (T)1 }  \
 }; \
 \
-MATX_EXPORT void NAME_LOWER ## _transl(const T p[3], NAME_LOWER out) \
+MATX_EXPORT void NAME_LOWER ## _transl(T p[3], NAME_LOWER out) \
 { \
         out[0][0] = (T)1; out[0][1] = (T)0; out[0][2] = (T)0; out[0][3] = p[0]; \
         out[1][0] = (T)0; out[1][1] = (T)1; out[1][2] = (T)0; out[1][3] = p[1]; \
@@ -66,9 +66,9 @@ MATX_EXPORT void NAME_LOWER ## _rotz(NAME_LOWER out, T theta) \
 } \
 \
 MATX_EXPORT void NAME_LOWER ## _look_at( \
-                            const T eye[3], \
-                            const T center[3], \
-                            const T up[3], \
+                            T eye[3], \
+                            T center[3], \
+                            T up[3], \
                             NAME_LOWER out) \
 { \
         T fx   = center[0] - eye[0]; \
