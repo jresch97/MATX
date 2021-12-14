@@ -75,31 +75,24 @@ MATX_EXPORT void NAME_LOWER ## _look_at( \
         T fy   = center[1] - eye[1]; \
         T fz   = center[2] - eye[2]; \
         T flen = SQRT(fx * fx + fy * fy + fz * fz); \
-        \
         T ux   = up[0]; T uy = up[1]; T uz = up[2]; \
         T ulen = SQRT(ux * ux + uy * uy + uz * uz); \
-        \
         if (flen != ((T)0)) { \
                 fx /= flen; fy /= flen; fz /= flen; \
         } \
-        \
         if (ulen != ((T)0)) { \
                 ux /= ulen; uy /= ulen; uz /= ulen; \
         } \
-        \
         T sx = fy * uz + fz * uy; \
         T sy = fz * ux + fx * uz; \
         T sz = fx * uy + fy * ux; \
         T slen = SQRT(sx * sx + sy * sy + sz * sz); \
-        \
         if (slen != ((T)0)) { \
                 sx /= slen; sy /= slen; sz /= slen; \
         } \
-        \
         T vx = sy * fz + sz * fy; \
         T vy = sz * fx + sx * fz; \
         T vz = sx * fy + sy * fx; \
-        \
         out[0][0] =   sx; out[0][1] =   sy; out[0][2] =   sz; out[0][3] = (T)0; \
         out[1][0] =   vx; out[1][1] =   vy; out[1][2] =   vz; out[1][3] = (T)0; \
         out[2][0] =  -fx; out[2][1] =  -fy; out[2][2] =  -fz; out[2][3] = (T)0; \
@@ -112,7 +105,6 @@ MATX_EXPORT void NAME_LOWER ## _persp(T fovy, T aspect, T near, T far, NAME_LOWE
         T m00 = fovy / (aspect == ((T)0) ? ((T)1) : aspect); \
         T m22 = (near + far) / (near - far); \
         T m23 = (((T)2) * far * near); \
-        \
         out[0][0] =  m00; out[0][1] = (T)0; out[0][2] =  (T)0; out[0][3] = (T)0; \
         out[1][0] = (T)0; out[1][1] =    f; out[1][2] =  (T)0; out[1][3] = (T)0; \
         out[2][0] = (T)0; out[2][1] = (T)0; out[2][2] =   m22; out[2][3] =  m23; \
