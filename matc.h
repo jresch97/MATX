@@ -22,20 +22,20 @@
 #ifndef MATX_MATC_H
 #define MATX_MATC_H
 
+#include <math.h>
+
 #include "matx.h"
 #include "mat4.h"
 
-#include <math.h>
+MATX(mat2f, _, 2, float, "%f")
+MATX(mat3f, _, 3, float, "%f")
+MATX(mat4f, _, 4, float, "%f")
 
-MATX(mat2f, 2, float, "%f")
-MATX(mat3f, 3, float, "%f")
-MATX(mat4f, 4, float, "%f")
+MATX(mat2d, _, 2, double, "%lf")
+MATX(mat3d, _, 3, double, "%lf")
+MATX(mat4d, _, 4, double, "%lf")
 
-MATX(mat2d, 2, double, "%lf")
-MATX(mat3d, 3, double, "%lf")
-MATX(mat4d, 4, double, "%lf")
-
-MATX_MAT4_HELPERS(mat4f, MAT4F, float, sqrtf, sinf, cosf, tanf)
-MATX_MAT4_HELPERS(mat4d, MAT4D, float, sqrt, sin, cos, tan)
+MATX_MAT4_HELPERS(mat4f, MAT4F, _, float, sqrtf, sinf, cosf, tanf)
+MATX_MAT4_HELPERS(mat4d, MAT4D, _, float, sqrt, sin, cos, tan)
 
 #endif

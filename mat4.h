@@ -22,18 +22,18 @@
 #ifndef MATX_MAT4_H
 #define MATX_MAT4_H
 
-// TODO: Verify math checks out.
+#include "matx.h"
 
-#define MATX_MAT4_HELPERS(NAME_LOWER, NAME_UPPER, T, SQRT, SIN, COS, TAN) \
+#define MATX_MAT4_HELPERS(NAME, NAME_CONST, DELIM, T, SQRT, SIN, COS, TAN) \
 \
-const NAME_LOWER NAME_UPPER ## _IDENT = { \
+const NAME NAME_CONST ## DELIM ## IDENT = { \
         { (T)1, (T)0, (T)0, (T)0 }, \
         { (T)0, (T)1, (T)0, (T)0 }, \
         { (T)0, (T)0, (T)1, (T)0 }, \
         { (T)0, (T)0, (T)0, (T)1 }  \
 }; \
 \
-MATX_EXPORT void NAME_LOWER ## _transl(T p[3], NAME_LOWER out) \
+MATX_EXPORT void NAME ## DELIM ## transl(NAME out, const T p[3]) \
 { \
         out[0][0] = (T)1; out[0][1] = (T)0; out[0][2] = (T)0; out[0][3] = p[0]; \
         out[1][0] = (T)0; out[1][1] = (T)1; out[1][2] = (T)0; out[1][3] = p[1]; \
@@ -41,7 +41,7 @@ MATX_EXPORT void NAME_LOWER ## _transl(T p[3], NAME_LOWER out) \
         out[3][0] = (T)0; out[3][1] = (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _rotx(NAME_LOWER out, T theta) \
+MATX_EXPORT void NAME ## DELIM ## rotx(NAME out, T theta) \
 { \
         out[0][0] = (T)1; out[0][1] =        (T)0; out[0][2] =       (T)0; out[0][3] = (T)0; \
         out[1][0] = (T)0; out[1][1] =  COS(theta); out[1][2] = SIN(theta); out[1][3] = (T)0; \
@@ -49,7 +49,7 @@ MATX_EXPORT void NAME_LOWER ## _rotx(NAME_LOWER out, T theta) \
         out[3][0] = (T)0; out[3][1] =        (T)0; out[3][2] =       (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _roty(NAME_LOWER out, T theta) \
+MATX_EXPORT void NAME ## DELIM ## roty(NAME out, T theta) \
 { \
         out[0][0] = COS(theta); out[0][1] = (T)0; out[0][2] = -SIN(theta); out[0][3] = (T)0; \
         out[1][0] =       (T)0; out[1][1] = (T)1; out[1][2] =        (T)0; out[1][3] = (T)0; \
@@ -57,7 +57,7 @@ MATX_EXPORT void NAME_LOWER ## _roty(NAME_LOWER out, T theta) \
         out[3][0] =       (T)0; out[3][1] = (T)0; out[3][2] =        (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _rotz(NAME_LOWER out, T theta) \
+MATX_EXPORT void NAME ## DELIM ## rotz(NAME out, T theta) \
 { \
         out[0][0] = COS(theta); out[0][1] = -SIN(theta); out[0][2] = (T)0; out[0][3] = (T)0; \
         out[1][0] = SIN(theta); out[1][1] =  COS(theta); out[1][2] = (T)0; out[1][3] = (T)0; \
@@ -65,11 +65,10 @@ MATX_EXPORT void NAME_LOWER ## _rotz(NAME_LOWER out, T theta) \
         out[3][0] =       (T)0; out[3][1] =        (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _look_at( \
-                            T eye[3], \
-                            T center[3], \
-                            T up[3], \
-                            NAME_LOWER out) \
+MATX_EXPORT void NAME ## DELIM ## look_at(NAME out, \
+                                          const T eye[3], \
+                                          const T center[3], \
+                                          const T up[3]) \
 { \
         T fx   = center[0] - eye[0]; \
         T fy   = center[1] - eye[1]; \
@@ -99,7 +98,11 @@ MATX_EXPORT void NAME_LOWER ## _look_at( \
         out[3][0] = (T)0; out[3][1] = (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _persp(T fovy, T aspect, T near, T far, NAME_LOWER out) \
+MATX_EXPORT void NAME_LOWER ## DELIM ## persp(NAME out, \
+                                              T fovy, \
+                                              T aspect, \
+                                              T near, \
+                                              T far) \
 { \
         T f   = ((T)1) / TAN(fovy / ((T)2)); \
         T m00 = fovy / (aspect == ((T)0) ? ((T)1) : aspect); \

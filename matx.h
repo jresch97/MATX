@@ -22,33 +22,34 @@
 #ifndef MATX_MATX_H
 #define MATX_MATX_H
 
+#include <stdio.h>
+#include <string.h>
+
 #define MATX_EXPORT static inline
 
-#define MATX(NAME_LOWER, N, T, SCALAR_FMT_STR) \
+#define MATX(NAME, DELIM, N, T, SCALAR_FMT_STR) \
 \
-typedef T NAME_LOWER[N][N]; \
+typedef T NAME[N][N]; \
 \
-MATX_EXPORT void NAME_LOWER ## _init(NAME_LOWER mat, T val) \
+MATX_EXPORT void NAME ## DELIM ## init(NAME out, T val) \
 { \
         for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) mat[i][j] = val; \
+                for (int j = 0; j < N; j++) out[i][j] = val; \
         } \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _ident(NAME_LOWER mat) \
+MATX_EXPORT void NAME ## DELIM ## ident(NAME out) \
 { \
         for (int i = 0; i < N; i++) { \
                 for (int j = 0; j < N; j++) { \
-                        mat[i][j] = (i == j ? (T)1 : (T)0); \
+                        out[i][j] = (i == j ? (T)1 : (T)0); \
                 } \
         } \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _mul(NAME_LOWER a, \
-                                    NAME_LOWER b, \
-                                    NAME_LOWER out) \
+MATX_EXPORT void NAME ## DELIM ## mul(NAME out, NAME a, NAME b) \
 { \
-        NAME_LOWER tmp; \
+        NAME tmp; \
         for (int i = 0; i < N; i++) { \
                 for (int j = 0; j < N; j++) { \
                         T sum = (T)0; \
@@ -61,7 +62,7 @@ MATX_EXPORT void NAME_LOWER ## _mul(NAME_LOWER a, \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _mulv(NAME_LOWER mat, T vec[N], T out[N]) \
+MATX_EXPORT void NAME ## DELIM ## mulv(T out[N], NAME mat, T vec[N]) \
 { \
         T tmp[N]; \
         for (int i = 0; i < N; i++) { \
@@ -72,16 +73,16 @@ MATX_EXPORT void NAME_LOWER ## _mulv(NAME_LOWER mat, T vec[N], T out[N]) \
         memcpy(out, tmp, N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _transp(NAME_LOWER mat, NAME_LOWER out) \
+MATX_EXPORT void NAME ## DELIM ## transp(NAME out, NAME mat) \
 { \
-        NAME_LOWER tmp; \
+        NAME tmp; \
         for (int i = 0; i < N; i++) { \
                 for (int j = 0; j < N; j++) tmp[i][j] = mat[j][i]; \
         } \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _fprintf(NAME_LOWER mat, FILE *f) \
+MATX_EXPORT void NAME ## DELIM ## fprintf(FILE *f, NAME mat) \
 { \
         for (int i = 0; i < N; i++) { \
                 for (int j = 0; j < N; j++) { \
@@ -93,9 +94,9 @@ MATX_EXPORT void NAME_LOWER ## _fprintf(NAME_LOWER mat, FILE *f) \
         fprintf(f, "\n"); \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## _printf(NAME_LOWER mat) \
+MATX_EXPORT void NAME ## DELIM ## printf(NAME mat) \
 { \
-        NAME_LOWER ## _fprintf(mat, stdout); \
+        NAME ## DELIM ## fprintf(stdout, mat); \
 }
 
 #endif
