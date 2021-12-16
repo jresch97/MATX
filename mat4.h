@@ -98,11 +98,11 @@ MATX_EXPORT void NAME ## DELIM ## look_at(NAME out, \
         out[3][0] = (T)0; out[3][1] = (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME_LOWER ## DELIM ## persp(NAME out, \
-                                              T fovy, \
-                                              T aspect, \
-                                              T near, \
-                                              T far) \
+MATX_EXPORT void NAME ## DELIM ## persp(NAME out, \
+                                        T fovy, \
+                                        T aspect, \
+                                        T near, \
+                                        T far) \
 { \
         T f   = ((T)1) / TAN(fovy / ((T)2)); \
         T m00 = fovy / (aspect == ((T)0) ? ((T)1) : aspect); \
