@@ -31,10 +31,10 @@
 \
 typedef T NAME[N][N]; \
 \
-MATX_EXPORT void NAME ## DELIM ## init(NAME out, T val) \
+MATX_EXPORT void NAME ## DELIM ## init(NAME out, T v) \
 { \
         for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) out[i][j] = val; \
+                for (int j = 0; j < N; j++) out[i][j] = v; \
         } \
 } \
 \
@@ -62,31 +62,31 @@ MATX_EXPORT void NAME ## DELIM ## mul(NAME out, NAME a, NAME b) \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## mulv(T out[N], NAME mat, T vec[N]) \
+MATX_EXPORT void NAME ## DELIM ## mulv(T out[N], NAME m, T v[N]) \
 { \
         T tmp[N]; \
         for (int i = 0; i < N; i++) { \
                 T sum = (T)0; \
-                for (int j = 0; j < N; j++) sum += mat[i][j] * vec[j]; \
+                for (int j = 0; j < N; j++) sum += m[i][j] * v[j]; \
                 tmp[i] = sum; \
         } \
         memcpy(out, tmp, N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## transp(NAME out, NAME mat) \
+MATX_EXPORT void NAME ## DELIM ## transp(NAME out, NAME m) \
 { \
         NAME tmp; \
         for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) tmp[i][j] = mat[j][i]; \
+                for (int j = 0; j < N; j++) tmp[i][j] = m[j][i]; \
         } \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## fprintf(FILE *f, NAME mat) \
+MATX_EXPORT void NAME ## DELIM ## fprintf(FILE *f, NAME m) \
 { \
         for (int i = 0; i < N; i++) { \
                 for (int j = 0; j < N; j++) { \
-                        fprintf(f, SCALAR_FMT_STR, mat[i][j]); \
+                        fprintf(f, SCALAR_FMT_STR, m[i][j]); \
                         if (j < (N - 1)) fprintf(f, " "); \
                 } \
                 if (i < (N - 1)) fprintf(f, "\n"); \
@@ -94,9 +94,9 @@ MATX_EXPORT void NAME ## DELIM ## fprintf(FILE *f, NAME mat) \
         fprintf(f, "\n"); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## printf(NAME mat) \
+MATX_EXPORT void NAME ## DELIM ## printf(NAME m) \
 { \
-        NAME ## DELIM ## fprintf(stdout, mat); \
+        NAME ## DELIM ## fprintf(stdout, m); \
 }
 
 #endif
