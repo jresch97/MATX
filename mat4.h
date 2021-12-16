@@ -41,28 +41,28 @@ MATX_EXPORT void NAME ## DELIM ## transl(NAME out, const T p[3]) \
         out[3][0] = (T)0; out[3][1] = (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## rotx(NAME out, T theta) \
+MATX_EXPORT void NAME ## DELIM ## rotx(NAME out, const T a) \
 { \
-        out[0][0] = (T)1; out[0][1] =        (T)0; out[0][2] =       (T)0; out[0][3] = (T)0; \
-        out[1][0] = (T)0; out[1][1] =  COS(theta); out[1][2] = SIN(theta); out[1][3] = (T)0; \
-        out[2][0] = (T)0; out[2][1] = -SIN(theta); out[2][2] = COS(theta); out[2][3] = (T)0; \
-        out[3][0] = (T)0; out[3][1] =        (T)0; out[3][2] =       (T)0; out[3][3] = (T)1; \
+        out[0][0] = (T)1; out[0][1] =    (T)0; out[0][2] =   (T)0; out[0][3] = (T)0; \
+        out[1][0] = (T)0; out[1][1] =  COS(a); out[1][2] = SIN(a); out[1][3] = (T)0; \
+        out[2][0] = (T)0; out[2][1] = -SIN(a); out[2][2] = COS(a); out[2][3] = (T)0; \
+        out[3][0] = (T)0; out[3][1] =    (T)0; out[3][2] =   (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## roty(NAME out, T theta) \
+MATX_EXPORT void NAME ## DELIM ## roty(NAME out, const T a) \
 { \
-        out[0][0] = COS(theta); out[0][1] = (T)0; out[0][2] = -SIN(theta); out[0][3] = (T)0; \
-        out[1][0] =       (T)0; out[1][1] = (T)1; out[1][2] =        (T)0; out[1][3] = (T)0; \
-        out[2][0] = SIN(theta); out[2][1] = (T)0; out[2][2] =  COS(theta); out[2][3] = (T)0; \
-        out[3][0] =       (T)0; out[3][1] = (T)0; out[3][2] =        (T)0; out[3][3] = (T)1; \
+        out[0][0] = COS(a); out[0][1] = (T)0; out[0][2] = -SIN(a); out[0][3] = (T)0; \
+        out[1][0] =   (T)0; out[1][1] = (T)1; out[1][2] =    (T)0; out[1][3] = (T)0; \
+        out[2][0] = SIN(a); out[2][1] = (T)0; out[2][2] =  COS(a); out[2][3] = (T)0; \
+        out[3][0] =   (T)0; out[3][1] = (T)0; out[3][2] =    (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## rotz(NAME out, T theta) \
+MATX_EXPORT void NAME ## DELIM ## rotz(NAME out, const T a) \
 { \
-        out[0][0] = COS(theta); out[0][1] = -SIN(theta); out[0][2] = (T)0; out[0][3] = (T)0; \
-        out[1][0] = SIN(theta); out[1][1] =  COS(theta); out[1][2] = (T)0; out[1][3] = (T)0; \
-        out[2][0] =       (T)0; out[2][1] =        (T)0; out[2][2] = (T)1; out[2][3] = (T)0; \
-        out[3][0] =       (T)0; out[3][1] =        (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
+        out[0][0] = COS(a); out[0][1] = -SIN(a); out[0][2] = (T)0; out[0][3] = (T)0; \
+        out[1][0] = SIN(a); out[1][1] =  COS(a); out[1][2] = (T)0; out[1][3] = (T)0; \
+        out[2][0] =   (T)0; out[2][1] =    (T)0; out[2][2] = (T)1; out[2][3] = (T)0; \
+        out[3][0] =   (T)0; out[3][1] =    (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
 MATX_EXPORT void NAME ## DELIM ## look_at(NAME out, \
@@ -82,16 +82,16 @@ MATX_EXPORT void NAME ## DELIM ## look_at(NAME out, \
         if (ulen != ((T)0)) { \
                 ux /= ulen; uy /= ulen; uz /= ulen; \
         } \
-        T sx = fy * uz + fz * uy; \
-        T sy = fz * ux + fx * uz; \
-        T sz = fx * uy + fy * ux; \
+        T sx   = fy * uz + fz * uy; \
+        T sy   = fz * ux + fx * uz; \
+        T sz   = fx * uy + fy * ux; \
         T slen = SQRT(sx * sx + sy * sy + sz * sz); \
         if (slen != ((T)0)) { \
                 sx /= slen; sy /= slen; sz /= slen; \
         } \
-        T vx = sy * fz + sz * fy; \
-        T vy = sz * fx + sx * fz; \
-        T vz = sx * fy + sy * fx; \
+        T vx   = sy * fz + sz * fy; \
+        T vy   = sz * fx + sx * fz; \
+        T vz   = sx * fy + sy * fx; \
         out[0][0] =   sx; out[0][1] =   sy; out[0][2] =   sz; out[0][3] = (T)0; \
         out[1][0] =   vx; out[1][1] =   vy; out[1][2] =   vz; out[1][3] = (T)0; \
         out[2][0] =  -fx; out[2][1] =  -fy; out[2][2] =  -fz; out[2][3] = (T)0; \
@@ -99,10 +99,10 @@ MATX_EXPORT void NAME ## DELIM ## look_at(NAME out, \
 } \
 \
 MATX_EXPORT void NAME ## DELIM ## persp(NAME out, \
-                                        T fovy, \
-                                        T aspect, \
-                                        T near, \
-                                        T far) \
+                                        const T fovy, \
+                                        const T aspect, \
+                                        const T near, \
+                                        const T far) \
 { \
         T f   = ((T)1) / TAN(fovy / ((T)2)); \
         T m00 = fovy / (aspect == ((T)0) ? ((T)1) : aspect); \
