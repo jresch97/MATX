@@ -40,6 +40,7 @@ int main()
 {
         float v[4];
         mat4f id, tr, rx, ry, rz;
+        const float pos[3] = { 1.0f, 2.0f, 3.0f };
         memcpy(id, MAT4F_IDENT, 16 * sizeof(float));
         printf("================================================================================\n");
         printf("= MAT4F_IDENT test\n");
@@ -54,7 +55,6 @@ int main()
         printf("================================================================================\n");
         printf("= mat4f_transl test\n");
         printf("================================================================================\n");
-        const float pos[3] = { 1.0f, 2.0f, 3.0f };
         mat4f_transl(tr, pos);
         mat4f_printf(tr);
         assert(tr[0][0] == 1.0f && tr[0][1] == 0.0f && tr[0][2] == 0.0f && tr[0][3] == 1.0f &&

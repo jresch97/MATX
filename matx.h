@@ -62,7 +62,7 @@ MATX_EXPORT void NAME ## DELIM ## mul(NAME out, NAME a, NAME b) \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## mulv(T out[N], NAME m, T v[N]) \
+MATX_EXPORT void NAME ## DELIM ## mulv(T out[N], NAME m, const T v[N]) \
 { \
         T tmp[N]; \
         for (int i = 0; i < N; i++) { \
