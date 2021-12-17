@@ -7,7 +7,7 @@ matx_tests.out: matx_tests.c
 	$(CC) $(CFLAGS) -o $@ $^
 
 mat4_tests.out: mat4_tests.c
-	$(CC) $(CFLAGS) -o $@ $^
+	$(CC) $(CFLAGS) -o $@ $^ -lm
 
 clean:
 	rm -f matx_tests.out mat4_tests.out
