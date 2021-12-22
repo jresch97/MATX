@@ -22,8 +22,6 @@
 #ifndef MATX_MAT4_H
 #define MATX_MAT4_H
 
-#include "matx.h"
-
 #define MAT4X(NAME, CONST, FUN, T, SQRT, SIN, COS, TAN) \
 \
 const NAME CONST ## ID = { \

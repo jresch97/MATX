@@ -22,6 +22,7 @@
 #include <assert.h>
 #include <float.h>
 #include <math.h>
+#include <matx.h>
 #include <mat4x.h>
 
 #define F0 (0.0f)
