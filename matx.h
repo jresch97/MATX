@@ -25,35 +25,59 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MATX_EXPORT static inline
+#define MATX_EXPORT  static inline
+#define MATX_STDOUT  stdout
 
-#define MATX(NAME, DELIM, N, T, SCALAR_FMT_STR) \
+#define MATX(NAME, CONST, FUN, N, T, SIZE_T, BOOL_T, FMT) \
 \
 typedef T NAME[N][N]; \
 \
-MATX_EXPORT void NAME ## DELIM ## init(NAME out, T v) \
+const SIZE_T CONST ## DIM = N; \
+const SIZE_T CONST ## SZ  = N * N; \
+\
+MATX_EXPORT void FUN ## ini(NAME out, T s) \
 { \
-        for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) out[i][j] = v; \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) out[i][j] = s; \
         } \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## ident(NAME out) \
+MATX_EXPORT void FUN ## id(NAME out) \
 { \
-        for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) { \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) { \
                         out[i][j] = (i == j ? (T)1 : (T)0); \
                 } \
         } \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## mul(NAME out, NAME a, NAME b) \
+MATX_EXPORT BOOL_T FUN ## eq(const NAME a, const NAME b) \
+{ \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) { \
+                        if (a[i][j] != b[i][j]) return (BOOL_T)0; \
+                } \
+        } \
+        return (BOOL_T)1; \
+} \
+\
+MATX_EXPORT BOOL_T FUN ## eqs(const NAME m, T s) \
+{ \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) { \
+                        if (m[i][j] != s) return (BOOL_T)0; \
+                } \
+        } \
+        return (BOOL_T)1; \
+} \
+\
+MATX_EXPORT void FUN ## mul(NAME out, const NAME a, const NAME b) \
 { \
         NAME tmp; \
-        for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) { \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) { \
                         T sum = (T)0; \
-                        for (int k = 0; k < N; k++) { \
+                        for (SIZE_T k = 0; k < N; k++) { \
                                 sum += a[i][k] * b[k][j]; \
                         } \
                         tmp[i][j] = sum;\
@@ -62,31 +86,31 @@ MATX_EXPORT void NAME ## DELIM ## mul(NAME out, NAME a, NAME b) \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## mulv(T out[N], NAME m, const T v[N]) \
+MATX_EXPORT void FUN ## mulv(T out[N], const NAME m, const T v[N]) \
 { \
         T tmp[N]; \
-        for (int i = 0; i < N; i++) { \
+        for (SIZE_T i = 0; i < N; i++) { \
                 T sum = (T)0; \
-                for (int j = 0; j < N; j++) sum += m[i][j] * v[j]; \
+                for (SIZE_T j = 0; j < N; j++) sum += m[i][j] * v[j]; \
                 tmp[i] = sum; \
         } \
         memcpy(out, tmp, N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## transp(NAME out, NAME m) \
+MATX_EXPORT void FUN ## transp(NAME out, const NAME m) \
 { \
         NAME tmp; \
-        for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) tmp[i][j] = m[j][i]; \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) tmp[i][j] = m[j][i]; \
         } \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## fprintf(FILE *f, NAME m) \
+MATX_EXPORT void FUN ## fprintf(FILE *f, const NAME m) \
 { \
-        for (int i = 0; i < N; i++) { \
-                for (int j = 0; j < N; j++) { \
-                        fprintf(f, SCALAR_FMT_STR, m[i][j]); \
+        for (SIZE_T i = 0; i < N; i++) { \
+                for (SIZE_T j = 0; j < N; j++) { \
+                        fprintf(f, FMT, m[i][j]); \
                         if (j < (N - 1)) fprintf(f, " "); \
                 } \
                 if (i < (N - 1)) fprintf(f, "\n"); \
@@ -94,9 +118,9 @@ MATX_EXPORT void NAME ## DELIM ## fprintf(FILE *f, NAME m) \
         fprintf(f, "\n"); \
 } \
 \
-MATX_EXPORT void NAME ## DELIM ## printf(NAME m) \
+MATX_EXPORT void FUN ## printf(const NAME m) \
 { \
-        NAME ## DELIM ## fprintf(stdout, m); \
+        FUN ## fprintf(MATX_STDOUT, m); \
 }
 
 #endif
