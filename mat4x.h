@@ -24,14 +24,14 @@
 
 #define MAT4X(NAME, CONST, FUN, T, SQRT, SIN, COS, TAN) \
 \
-const NAME CONST ## ID = { \
+NAME CONST ## ID = { \
         { (T)1, (T)0, (T)0, (T)0 }, \
         { (T)0, (T)1, (T)0, (T)0 }, \
         { (T)0, (T)0, (T)1, (T)0 }, \
         { (T)0, (T)0, (T)0, (T)1 }  \
 }; \
 \
-MATX_EXPORT void FUN ## transl(NAME out, const T p[3]) \
+MATX_EXPORT void FUN ## transl(NAME out, T p[3]) \
 { \
         out[0][0] = (T)1; out[0][1] = (T)0; out[0][2] = (T)0; out[0][3] = p[0]; \
         out[1][0] = (T)0; out[1][1] = (T)1; out[1][2] = (T)0; out[1][3] = p[1]; \
@@ -39,7 +39,7 @@ MATX_EXPORT void FUN ## transl(NAME out, const T p[3]) \
         out[3][0] = (T)0; out[3][1] = (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void FUN ## rotx(NAME out, const T a) \
+MATX_EXPORT void FUN ## rotx(NAME out, T a) \
 { \
         out[0][0] = (T)1; out[0][1] =    (T)0; out[0][2] =   (T)0; out[0][3] = (T)0; \
         out[1][0] = (T)0; out[1][1] =  COS(a); out[1][2] = SIN(a); out[1][3] = (T)0; \
@@ -47,7 +47,7 @@ MATX_EXPORT void FUN ## rotx(NAME out, const T a) \
         out[3][0] = (T)0; out[3][1] =    (T)0; out[3][2] =   (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void FUN ## roty(NAME out, const T a) \
+MATX_EXPORT void FUN ## roty(NAME out, T a) \
 { \
         out[0][0] = COS(a); out[0][1] = (T)0; out[0][2] = -SIN(a); out[0][3] = (T)0; \
         out[1][0] =   (T)0; out[1][1] = (T)1; out[1][2] =    (T)0; out[1][3] = (T)0; \
@@ -55,7 +55,7 @@ MATX_EXPORT void FUN ## roty(NAME out, const T a) \
         out[3][0] =   (T)0; out[3][1] = (T)0; out[3][2] =    (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void FUN ## rotz(NAME out, const T a) \
+MATX_EXPORT void FUN ## rotz(NAME out, T a) \
 { \
         out[0][0] = COS(a); out[0][1] = -SIN(a); out[0][2] = (T)0; out[0][3] = (T)0; \
         out[1][0] = SIN(a); out[1][1] =  COS(a); out[1][2] = (T)0; out[1][3] = (T)0; \
@@ -63,12 +63,12 @@ MATX_EXPORT void FUN ## rotz(NAME out, const T a) \
         out[3][0] =   (T)0; out[3][1] =    (T)0; out[3][2] = (T)0; out[3][3] = (T)1; \
 } \
 \
-MATX_EXPORT void FUN ## look(NAME out, const T eye[3], const T center[3], const T up[3]) \
+MATX_EXPORT void FUN ## look(NAME out, T eye[3], T ctr[3], T up[3]) \
 { \
         T fx, fy, fz, flen, ux, uy, uz, ulen, sx, sy, sz, slen, vx, vy, vz; \
-        fx = center[0] - eye[0]; \
-        fy = center[1] - eye[1]; \
-        fz = center[2] - eye[2]; \
+        fx = ctr[0] - eye[0]; \
+        fy = ctr[1] - eye[1]; \
+        fz = ctr[2] - eye[2]; \
         ux = up[0]; \
         uy = up[1]; \
         uz = up[2]; \

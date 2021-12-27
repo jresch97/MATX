@@ -25,8 +25,8 @@
 #include <stdio.h>
 #include <string.h>
 
-#define MATX_EXPORT  static inline
-#define MATX_STDOUT  stdout
+#define MATX_EXPORT static inline
+#define MATX_STDOUT stdout
 
 #define MATX(NAME, CONST, FUN, N, T, SIZE_T, BOOL_T, FMT) \
 \
@@ -35,7 +35,7 @@ typedef T NAME[N][N]; \
 const SIZE_T CONST ## DIM = N; \
 const SIZE_T CONST ## SZ  = N * N; \
 \
-MATX_EXPORT void FUN ## ini(NAME out, T s) \
+MATX_EXPORT void FUN ## init(NAME out, T s) \
 { \
         for (SIZE_T i = 0; i < N; i++) { \
                 for (SIZE_T j = 0; j < N; j++) out[i][j] = s; \
@@ -51,7 +51,7 @@ MATX_EXPORT void FUN ## id(NAME out) \
         } \
 } \
 \
-MATX_EXPORT BOOL_T FUN ## eq(const NAME a, const NAME b) \
+MATX_EXPORT BOOL_T FUN ## eq(NAME a, NAME b) \
 { \
         for (SIZE_T i = 0; i < N; i++) { \
                 for (SIZE_T j = 0; j < N; j++) { \
@@ -61,7 +61,7 @@ MATX_EXPORT BOOL_T FUN ## eq(const NAME a, const NAME b) \
         return (BOOL_T)1; \
 } \
 \
-MATX_EXPORT BOOL_T FUN ## eqs(const NAME m, T s) \
+MATX_EXPORT BOOL_T FUN ## eqs(NAME m, T s) \
 { \
         for (SIZE_T i = 0; i < N; i++) { \
                 for (SIZE_T j = 0; j < N; j++) { \
@@ -71,7 +71,7 @@ MATX_EXPORT BOOL_T FUN ## eqs(const NAME m, T s) \
         return (BOOL_T)1; \
 } \
 \
-MATX_EXPORT void FUN ## mul(NAME out, const NAME a, const NAME b) \
+MATX_EXPORT void FUN ## mul(NAME out, NAME a, NAME b) \
 { \
         NAME tmp; \
         for (SIZE_T i = 0; i < N; i++) { \
@@ -86,7 +86,7 @@ MATX_EXPORT void FUN ## mul(NAME out, const NAME a, const NAME b) \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void FUN ## mulv(T out[N], const NAME m, const T v[N]) \
+MATX_EXPORT void FUN ## mulv(T out[N], NAME m, T v[N]) \
 { \
         T tmp[N]; \
         for (SIZE_T i = 0; i < N; i++) { \
@@ -97,7 +97,7 @@ MATX_EXPORT void FUN ## mulv(T out[N], const NAME m, const T v[N]) \
         memcpy(out, tmp, N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void FUN ## transp(NAME out, const NAME m) \
+MATX_EXPORT void FUN ## transp(NAME out, NAME m) \
 { \
         NAME tmp; \
         for (SIZE_T i = 0; i < N; i++) { \
@@ -106,7 +106,7 @@ MATX_EXPORT void FUN ## transp(NAME out, const NAME m) \
         memcpy(out, tmp, N * N * sizeof(T)); \
 } \
 \
-MATX_EXPORT void FUN ## fprintf(FILE *f, const NAME m) \
+MATX_EXPORT void FUN ## fprintf(FILE *f, NAME m) \
 { \
         for (SIZE_T i = 0; i < N; i++) { \
                 for (SIZE_T j = 0; j < N; j++) { \
@@ -118,7 +118,7 @@ MATX_EXPORT void FUN ## fprintf(FILE *f, const NAME m) \
         fprintf(f, "\n"); \
 } \
 \
-MATX_EXPORT void FUN ## printf(const NAME m) \
+MATX_EXPORT void FUN ## printf(NAME m) \
 { \
         FUN ## fprintf(MATX_STDOUT, m); \
 }
